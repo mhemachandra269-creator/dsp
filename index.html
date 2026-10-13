@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Digital Risk Protection Platform demo dashboard">
+  <title>Sentinel — Digital Risk Protection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="js/app.js"></script>
+</head>
+<body>
+  <section class="login-screen" id="login-screen" aria-labelledby="login-title">
+    <div class="login-glow login-glow-one"></div><div class="login-glow login-glow-two"></div>
+    <form class="login-card" id="login-form">
+      <div class="login-brand-mark" aria-hidden="true">✓</div>
+      <div class="login-eyebrow">DIGITAL RISK DEFENSE</div>
+      <h1 id="login-title">Welcome back</h1>
+      <p class="login-description">Sign in to access your Sentinel security dashboard.</p>
+      <label for="login-email">Gmail address</label>
+      <input id="login-email" name="email" type="email" placeholder="you@gmail.com" autocomplete="username" required>
+      <label for="login-password">Password</label>
+      <input id="login-password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+      <button class="login-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+      <p class="login-demo-note">Demo login only — any valid email and non-empty password will open the dashboard. No credentials are sent or saved.</p>
+      <p class="login-error" id="login-error" role="alert" hidden>Please enter a valid email address and password.</p>
+    </form>
+  </section>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview" aria-label="Sentinel home">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 20 5v6c0 5.2-3.4 9-8 11-4.6-2-8-5.8-8-11V5l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span>
+        <span><strong>sentinel<span>.</span></strong><small> DIGITAL RISK DEFENSE</small></span>
+      </a>
+      <div class="workspace"><span class="workspace-icon">◈</span><span><b>Workspace Alpha</b><small>Demo environment</small></span><span class="chevron">⌄</span></div>
+      <p class="nav-label">WORKSPACE</p>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-page="overview"><span>▦</span> Overview</button>
+        <button class="nav-item" data-page="scanner"><span>⌕</span> URL Scanner <i class="nav-dot"></i></button>
+        <button class="nav-item" data-page="threats"><span>◉</span> Threat Intelligence</button>
+        <button class="nav-item" data-page="assessment"><span>◈</span> Risk Assessment</button>
+        <button class="nav-item" data-page="alerts"><span>♧</span> Security Alerts <em id="sidebar-alert-count">3</em></button>
+        <button class="nav-item" data-page="history"><span>◷</span> Scan History</button>
+      </nav>
+      <p class="nav-label nav-label-spaced">RESOURCES</p>
+      <nav class="nav-list">
+        <button class="nav-item" data-page="recommendations"><span>✧</span> Recommendations</button>
+        <button class="nav-item" data-page="settings"><span>⚙</span> Settings</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-icon">✦</span><b>Security tip</b><p>Pause before you click. Verify the sender and domain before sharing information.</p><button data-page="recommendations">View safety tips <span>↗</span></button></div>
+        <div class="profile-row"><div class="avatar">DA</div><div><b id="profile-name-side">Demo Analyst</b><small>Security analyst</small></div><button class="icon-button profile-menu" data-page="settings" aria-label="Profile settings">•••</button></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu icon-button" id="mobile-menu" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><b id="page-breadcrumb">Overview</b></div>
+        <div class="top-actions">
+          <span class="environment-pill"><i></i> DEMO MODE</span>
+          <button class="icon-button theme-toggle" id="theme-toggle" aria-label="Toggle light and dark theme">☼</button>
+          <button class="notification-button" data-page="alerts" aria-label="Open security alerts">♧<i id="top-alert-dot"></i></button>
+          <div class="top-avatar">DA</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="page active" id="page-overview">
+          <div class="welcome-row">
+            <div><div class="eyebrow"><span class="pulse-dot"></span> YOUR DIGITAL SECURITY AT A GLANCE</div><h1>Good morning, <span id="welcome-name">Analyst</span> <span class="wave">✦</span></h1><p class="page-subtitle">Here’s what’s happening across your digital risk landscape.</p></div>
+            <button class="button button-primary" data-page="scanner"><span>＋</span> Run a new scan</button>
+          </div>
+          <div class="demo-banner"><span class="banner-symbol">ⓘ</span><div><b>Demonstration environment</b><p>Metrics and threat records include sample data. URL checks are illustrative heuristics, not verified threat intelligence.</p></div><button class="banner-close" id="dismiss-banner" aria-label="Dismiss notice">×</button></div>
+
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Overall risk score</span><span class="stat-icon purple">◈</span></div><div class="stat-value"><strong id="overall-score">38</strong><span class="score-unit">/100</span><span class="trend neutral">DEMO</span></div><div class="mini-progress"><span id="overall-progress" style="width:38%"></span></div><div class="stat-foot"><span class="status-dot medium"></span> Moderate demo risk</div></article>
+            <article class="stat-card"><div class="stat-top"><span>URLs analyzed</span><span class="stat-icon blue">⌕</span></div><div class="stat-value"><strong id="total-scans">128</strong><span class="trend positive">↗ Live demo</span></div><div class="stat-foot"><span class="tiny-bar"></span> Scan history updates as you test</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Needs review</span><span class="stat-icon orange">⚑</span></div><div class="stat-value"><strong id="review-count">12</strong><span class="trend warning">Sample data</span></div><div class="stat-foot"><span class="status-dot high"></span> Suspicious or high-risk examples</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Open alerts</span><span class="stat-icon cyan">♧</span></div><div class="stat-value"><strong id="open-alert-count">3</strong><span class="trend neutral">In demo center</span></div><div class="stat-foot"><span class="status-dot info"></span> Review alerts for guidance</div></article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel risk-panel"><div class="panel-heading"><div><h2>Risk distribution</h2><p>Breakdown of illustrative scan results</p></div><span class="select-label">LAST 7 DAYS <span>⌄</span></span></div><div class="chart-area chart-donut"><canvas id="riskChart" aria-label="Risk distribution chart"></canvas><div class="donut-center"><strong id="donut-total">128</strong><span>total scans</span></div></div><div class="legend-list"><div><span class="legend-key safe"></span><span>Low risk</span><b id="safe-count">83</b></div><div><span class="legend-key medium-key"></span><span>Medium risk</span><b id="medium-count">29</b></div><div><span class="legend-key high-key"></span><span>High / critical</span><b id="high-count">16</b></div></div></article>
+            <article class="panel activity-panel"><div class="panel-heading"><div><h2>Scanning activity</h2><p>Illustrative activity over the past week</p></div><span class="chart-legend"><i></i> Scans</span></div><div class="chart-area"><canvas id="activityChart" aria-label="Weekly scanning activity chart"></canvas></div></article>
+          </div>
+
+          <article class="panel recent-panel"><div class="panel-heading"><div><h2>Recent scan activity</h2><p>Latest URL analysis records</p></div><button class="text-button" data-page="history">View all history <span>→</span></button></div><div class="table-wrap"><table><thead><tr><th>URL / DOMAIN</th><th>RISK SCORE</th><th>RISK LEVEL</th><th>DATE</th><th></th></tr></thead><tbody id="recent-scans-body"></tbody></table></div><div class="empty-state hidden" id="recent-empty">No scans yet. Open URL Scanner to analyze a demo URL.</div></article>
+          <div class="bottom-grid"><article class="panel alerts-preview"><div class="panel-heading"><div><h2>Latest alerts</h2><p>Sample security events</p></div><button class="text-button" data-page="alerts">View alerts →</button></div><div id="dashboard-alerts"></div></article><article class="panel quick-panel"><div class="panel-heading"><div><h2>Quick actions</h2><p>Continue protecting your digital space</p></div></div><button class="quick-action" data-page="scanner"><span class="quick-icon cyan-bg">⌕</span><span><b>Analyze a URL</b><small>Review illustrative risk indicators</small></span><span class="quick-arrow">↗</span></button><button class="quick-action" data-page="assessment"><span class="quick-icon purple-bg">◈</span><span><b>Run risk assessment</b><small>Check your security habits</small></span><span class="quick-arrow">↗</span></button><button class="quick-action" data-page="recommendations"><span class="quick-icon orange-bg">✧</span><span><b>Review recommendations</b><small>Explore practical security tips</small></span><span class="quick-arrow">↗</span></button></article></div>
+        </section>
+
+        <section class="page" id="page-scanner">
+          <div class="page-title-row"><div><div class="eyebrow">THREAT ANALYSIS</div><h1>URL Risk Scanner</h1><p class="page-subtitle">Review URL characteristics with transparent, educational heuristics.</p></div><span class="demo-tag">SIMULATED ANALYSIS</span></div>
+          <div class="scanner-layout"><article class="panel scanner-main"><div class="scanner-hero-icon">⌕</div><h2>Inspect a website URL</h2><p>Enter a URL to review its structure for common warning signs. The platform will not open or visit the submitted address.</p><form id="scan-form"><label for="url-input">Website URL</label><div class="url-input-wrap"><span>↗</span><input id="url-input" type="text" placeholder="https://example.com" autocomplete="url" required><button class="button button-primary" type="submit" id="scan-button">Analyze URL <span>→</span></button></div><small class="field-help">Try a sample: <button type="button" class="sample-link" data-sample="https://example.com">example.com</button>, <button type="button" class="sample-link" data-sample="http://secure-login-example.invalid">suspicious demo URL</button></small><div class="form-error" id="scan-error" role="alert"></div></form><div class="scan-progress hidden" id="scan-progress"><div class="progress-label"><span><i class="spinner"></i> Reviewing URL indicators…</span><b id="progress-percent">0%</b></div><div class="progress-track"><span id="progress-fill"></span></div><small>This is a local demonstration. No external security service is contacted.</small></div><div id="scan-result" class="scan-result hidden" aria-live="polite"></div></article><aside class="panel scanner-side"><div class="panel-heading"><div><h2>What we check</h2><p>Basic URL characteristics</p></div></div><div class="check-item"><span class="check-icon">↗</span><div><b>HTTPS indicator</b><p>Checks whether the URL uses encrypted transport.</p></div></div><div class="check-item"><span class="check-icon">⌁</span><div><b>URL structure</b><p>Looks for unusual length, IP-host format, or excessive subdomains.</p></div></div><div class="check-item"><span class="check-icon">⚑</span><div><b>Deceptive patterns</b><p>Flags selected words that can appear in deceptive links.</p></div></div><div class="notice-card"><span>ⓘ</span><p><b>Limitations</b><br>HTTPS does not prove a site is safe. This demo cannot confirm whether a URL is malicious or legitimate.</p></div></aside></div>
+          <article class="panel recent-panel"><div class="panel-heading"><div><h2>Recent scans</h2><p>Your saved demonstration results</p></div><button class="text-button" data-page="history">Open full history →</button></div><div class="table-wrap"><table><thead><tr><th>URL / DOMAIN</th><th>RISK SCORE</th><th>RISK LEVEL</th><th>DATE</th><th></th></tr></thead><tbody id="scanner-history-body"></tbody></table></div></article>
+        </section>
+
+        <section class="page" id="page-threats">
+          <div class="page-title-row"><div><div class="eyebrow">THREAT LANDSCAPE</div><h1>Threat Intelligence</h1><p class="page-subtitle">Explore simulated threat examples and learn common warning signs.</p></div><span class="demo-tag">SAMPLE DATA</span></div>
+          <div class="demo-banner"><span class="banner-symbol">ⓘ</span><div><b>Sample intelligence only</b><p>These records are educational examples, not verified live threats or claims about real organizations.</p></div></div>
+          <div class="filter-row"><div class="search-box"><span>⌕</span><input id="threat-search" type="search" placeholder="Search threats, domains, or indicators…"></div><select id="threat-severity" aria-label="Filter by severity"><option value="all">All severities</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select><select id="threat-type" aria-label="Filter by threat type"><option value="all">All threat types</option><option>Phishing</option><option>Brand impersonation</option><option>Data exposure</option><option>Suspicious domain</option></select></div>
+          <div class="threat-grid" id="threat-grid"></div>
+        </section>
+
+        <section class="page" id="page-assessment">
+          <div class="page-title-row"><div><div class="eyebrow">SECURITY POSTURE</div><h1>Digital Risk Assessment</h1><p class="page-subtitle">Answer a few questions to get an educational security-habits review.</p></div><span class="demo-tag">SELF-ASSESSMENT</span></div>
+          <div class="assessment-layout"><form class="panel assessment-form" id="assessment-form"><div class="panel-heading"><div><h2>Security habits checklist</h2><p>Select the statements that apply to you.</p></div><span class="question-count">6 QUESTIONS</span></div>
+            <fieldset class="question"><legend><span>01</span> Do you reuse passwords across multiple accounts?</legend><label class="choice"><input type="radio" name="passwords" value="yes" required><span>Yes, I sometimes reuse passwords</span></label><label class="choice"><input type="radio" name="passwords" value="no"><span>No, I use unique passwords</span></label></fieldset>
+            <fieldset class="question"><legend><span>02</span> Is multi-factor authentication enabled on important accounts?</legend><label class="choice"><input type="radio" name="mfa" value="no" required><span>Not on most important accounts</span></label><label class="choice"><input type="radio" name="mfa" value="yes"><span>Yes, where available</span></label></fieldset>
+            <fieldset class="question"><legend><span>03</span> Do you verify unexpected links before clicking?</legend><label class="choice"><input type="radio" name="links" value="no" required><span>Not consistently</span></label><label class="choice"><input type="radio" name="links" value="yes"><span>Yes, I check the sender and domain</span></label></fieldset>
+            <fieldset class="question"><legend><span>04</span> Are your operating system and browser updated regularly?</legend><label class="choice"><input type="radio" name="updates" value="no" required><span>Updates are often delayed</span></label><label class="choice"><input type="radio" name="updates" value="yes"><span>Yes, automatic updates are enabled</span></label></fieldset>
+            <fieldset class="question"><legend><span>05</span> Do you share sensitive personal details on unverified websites?</legend><label class="choice"><input type="radio" name="privacy" value="yes" required><span>Sometimes, without fully checking</span></label><label class="choice"><input type="radio" name="privacy" value="no"><span>No, I verify the website first</span></label></fieldset>
+            <fieldset class="question"><legend><span>06</span> Do you download files from sources you do not trust?</legend><label class="choice"><input type="radio" name="downloads" value="yes" required><span>Sometimes</span></label><label class="choice"><input type="radio" name="downloads" value="no"><span>No, I use trusted sources</span></label></fieldset>
+            <button class="button button-primary full-button" type="submit">Generate my assessment <span>→</span></button><p class="field-help">Your answers are processed locally in this browser for this demo.</p></form><aside class="panel assessment-result" id="assessment-result"><div class="result-placeholder"><div class="placeholder-orbit">◈</div><h2>Your results will appear here</h2><p>Complete the checklist to see your illustrative risk score and prioritized recommendations.</p></div></aside></div>
+        </section>
+
+        <section class="page" id="page-alerts">
+          <div class="page-title-row"><div><div class="eyebrow">MONITORING CENTER</div><h1>Security Alerts</h1><p class="page-subtitle">Review example incidents and track your alert inbox.</p></div><button class="button button-secondary" id="mark-all-read">✓ Mark all read</button></div>
+          <div class="alert-summary-grid"><div class="alert-summary"><span class="alert-summary-icon critical">!</span><div><small>Critical</small><b id="critical-alert-count">1</b></div></div><div class="alert-summary"><span class="alert-summary-icon high">↑</span><div><small>High</small><b id="high-alert-count">1</b></div></div><div class="alert-summary"><span class="alert-summary-icon medium">⌁</span><div><small>Medium</small><b id="medium-alert-count">1</b></div></div><div class="alert-summary"><span class="alert-summary-icon low">✓</span><div><small>Unread</small><b id="unread-alert-count">3</b></div></div></div>
+          <div class="filter-row"><div class="search-box"><span>⌕</span><input id="alert-search" type="search" placeholder="Search alerts…"></div><select id="alert-severity" aria-label="Filter alerts by severity"><option value="all">All severities</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select><select id="alert-status" aria-label="Filter alerts by status"><option value="all">All statuses</option><option value="unread">Unread</option><option value="read">Read</option></select></div>
+          <div class="alert-list" id="alert-list"></div>
+        </section>
+
+        <section class="page" id="page-history">
+          <div class="page-title-row"><div><div class="eyebrow">ACTIVITY LOG</div><h1>Scan History</h1><p class="page-subtitle">Review, filter, and export saved demonstration scans.</p></div><button class="button button-primary" id="export-history">⇩ Export CSV</button></div>
+          <div class="history-stats"><div class="history-stat"><small>Total saved scans</small><b id="history-total">0</b></div><div class="history-stat"><small>Average risk score</small><b id="history-average">—</b></div><div class="history-stat"><small>High / critical</small><b id="history-high">0</b></div></div>
+          <div class="panel history-panel"><div class="filter-row history-filters"><div class="search-box"><span>⌕</span><input id="history-search" type="search" placeholder="Search URL history…"></div><select id="history-level" aria-label="Filter history by risk"><option value="all">All risk levels</option><option>Low</option><option>Medium</option><option>High</option><option>Critical</option></select><button class="button button-secondary button-small" id="clear-history">Clear history</button></div><div class="table-wrap"><table><thead><tr><th>URL / DOMAIN</th><th>RISK SCORE</th><th>RISK LEVEL</th><th>DATE</th><th>ACTIONS</th></tr></thead><tbody id="history-body"></tbody></table></div><div class="empty-state hidden" id="history-empty">No matching scans. Try a different filter or analyze a URL.</div></div>
+        </section>
+
+        <section class="page" id="page-recommendations">
+          <div class="page-title-row"><div><div class="eyebrow">SECURITY PLAYBOOK</div><h1>Security Recommendations</h1><p class="page-subtitle">Small, practical actions that strengthen your digital safety.</p></div><span class="demo-tag">EDUCATIONAL GUIDE</span></div>
+          <div class="recommendation-feature"><div><span class="feature-eyebrow">START WITH THE BASICS</span><h2>Strong security is built<br>one habit at a time.</h2><p>Use this checklist to prioritize improvements to your everyday digital routines.</p><div class="feature-progress"><span id="recommendation-progress"></span></div><small id="recommendation-progress-label">0 of 6 completed</small></div><div class="feature-art" aria-hidden="true"><div class="shield-large">✓</div><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><span class="art-spark spark-a">✦</span><span class="art-spark spark-b">✧</span></div></div>
+          <div class="recommendation-grid" id="recommendation-grid"></div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="page-title-row"><div><div class="eyebrow">PREFERENCES</div><h1>Settings & Profile</h1><p class="page-subtitle">Customize your demo workspace and local preferences.</p></div></div>
+          <div class="settings-layout"><div class="settings-column"><article class="panel settings-panel"><div class="panel-heading"><div><h2>Profile</h2><p>Local display preferences only</p></div><span class="settings-icon">♙</span></div><form id="profile-form"><label for="profile-name">Display name</label><input class="form-input" id="profile-name" maxlength="40" value="Demo Analyst" required><label for="profile-email">Email (display only)</label><input class="form-input" id="profile-email" type="email" placeholder="analyst@example.com"><button class="button button-primary" type="submit">Save profile</button></form></article><article class="panel settings-panel"><div class="panel-heading"><div><h2>Appearance</h2><p>Choose your dashboard theme</p></div><span class="settings-icon">☼</span></div><div class="setting-row"><div><b>Light theme</b><small>Switch to a brighter interface</small></div><label class="switch"><input id="theme-setting" type="checkbox"><span></span></label></div></article><article class="panel settings-panel"><div class="panel-heading"><div><h2>Notifications</h2><p>Local interface preferences</p></div><span class="settings-icon">♧</span></div><div class="setting-row"><div><b>In-app notifications</b><small>Show toast messages for actions</small></div><label class="switch"><input id="notifications-setting" type="checkbox" checked><span></span></label></div></article></div><div class="settings-column"><article class="panel settings-panel"><div class="panel-heading"><div><h2>Data & privacy</h2><p>Manage locally stored demo data</p></div><span class="settings-icon">⌑</span></div><div class="setting-row"><div><b>Export scan history</b><small>Download saved scan records as CSV</small></div><button class="button button-secondary button-small" id="settings-export">Export</button></div><div class="setting-row"><div><b>Clear scan history</b><small>Remove saved scan results from this browser</small></div><button class="button button-danger button-small" id="settings-clear">Clear</button></div><div class="setting-row"><div><b>Reset demo data</b><small>Restore example alerts and preferences</small></div><button class="button button-secondary button-small" id="reset-demo">Reset</button></div></article><article class="panel settings-panel security-note"><span class="notice-symbol">ⓘ</span><h3>Demo security notice</h3><p>This project is a front-end demonstration. It does not provide real authentication, live threat intelligence, malware detection, or data-breach monitoring. Do not enter real passwords or sensitive personal information.</p></article><article class="panel settings-panel"><div class="panel-heading"><div><h2>About Sentinel</h2><p>Digital Risk Protection Platform</p></div></div><div class="about-row"><span>Project version</span><b>1.0.0 Demo</b></div><div class="about-row"><span>Technology</span><b>HTML · CSS · JavaScript</b></div><div class="about-row"><span>Charts</span><b>Chart.js</b></div></article></div></div>
+        </section>
+        <footer class="footer"><span>© 2026 Sentinel DRPP <span class="footer-dot">•</span> Student project demonstration</span><span><i class="footer-live"></i> Local demo environment <span class="footer-dot">•</span> Built for safer digital habits</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <dialog class="detail-dialog" id="detail-dialog"><div class="dialog-head"><span class="eyebrow">DETAIL VIEW</span><button class="icon-button" id="dialog-close" aria-label="Close details">×</button></div><div id="dialog-content"></div></dialog>
+</body>
+</html>
